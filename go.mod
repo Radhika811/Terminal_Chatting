@@ -1,6 +1,6 @@
 module chatting
 
-go 1.23.2
+go 1.20
 
 require (
 	gorm.io/driver/sqlite v1.5.6
