@@ -9,7 +9,6 @@ import (
 	"strings"
 )
 
-
 var (
 	clients   = make(map[net.Conn]string) // List of clients and their names
 	clientMux sync.Mutex                  // Mutex to protect clients map
@@ -17,11 +16,6 @@ var (
 
 func main() {
 	var err error
-
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		os.Exit(1)
-	}
 
 	// Start listening for incoming TCP connections
 	ln, err := net.Listen("tcp", ":8080")
@@ -53,7 +47,6 @@ func handleClient(conn net.Conn) {
 	clientMux.Unlock()
 
 	fmt.Println("New client connected:", conn.RemoteAddr())
-
 
 	// Broadcast that the client has joined
 	broadcastMessage(fmt.Sprintf("%s joined the chat", conn.RemoteAddr().String()), conn)
