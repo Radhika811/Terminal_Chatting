@@ -20,18 +20,12 @@ func main() {
 
 	// Goroutine to handle receiving messages from the server
 	go func() {
-		scanner := bufio.NewScanner(conn)
-		for scanner.Scan() {
-			msg := scanner.Text()
-			fmt.Println(msg)
-		}
+		
 	}()
 
 	// Send messages to the server
 	input := bufio.NewReader(os.Stdin)
 	for {
-		fmt.Print("> ")
-		message, _ := input.ReadString('\n')
-		fmt.Fprint(conn, message)
+		
 	}
 }

@@ -42,9 +42,6 @@ func main() {
 func handleClient(conn net.Conn) {
 	defer conn.Close()
 
-	clientMux.Lock()
-	clients[conn] = conn.RemoteAddr().String() // Add the client to the list
-	clientMux.Unlock()
 
 	fmt.Println("New client connected:", conn.RemoteAddr())
 
@@ -52,21 +49,9 @@ func handleClient(conn net.Conn) {
 	broadcastMessage(fmt.Sprintf("%s joined the chat", conn.RemoteAddr().String()), conn)
 
 	// Read incoming messages from the client
-	scanner := bufio.NewScanner(conn)
-	for scanner.Scan() {
-		msg := scanner.Text()
-		if strings.TrimSpace(msg) == "" {
-			continue
-		}
-
-		// Broadcast the message to all clients
-		broadcastMessage(fmt.Sprintf("%s: %s", clients[conn], msg), conn)
-	}
+	
 
 	// Handle client disconnection
-	clientMux.Lock()
-	delete(clients, conn)
-	clientMux.Unlock()
 
 	fmt.Println("Client disconnected:", conn.RemoteAddr())
 	broadcastMessage(fmt.Sprintf("%s left the chat", conn.RemoteAddr().String()), conn)
@@ -75,13 +60,6 @@ func handleClient(conn net.Conn) {
 
 // Broadcasts a message to all clients except the sender
 func broadcastMessage(message string, sender net.Conn) {
-	fmt.Println("Broadcasting:", message)
-	clientMux.Lock()
-	for client := range clients {
-		if client != sender {
-			fmt.Fprintln(client, message)
-		}
-	}
-	clientMux.Unlock()
+	
 }
 
