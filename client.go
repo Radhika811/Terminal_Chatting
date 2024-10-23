@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// Connect to the chat server
-	conn, err := net.Dial("tcp", "localhost:8080")
+	conn, err := net.Dial("tcp", "10.81.17.131:8080")
 	if err != nil {
 		fmt.Println("Error connecting to server:", err)
 		os.Exit(1)

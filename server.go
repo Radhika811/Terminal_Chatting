@@ -18,7 +18,7 @@ func main() {
 	var err error
 
 	// Start listening for incoming TCP connections
-	ln, err := net.Listen("tcp", ":8080")
+	ln, err := net.Listen("tcp", "10.81.17.131:8080")
 	if err != nil {
 		fmt.Println("Error starting the server:", err)
 		os.Exit(1)
